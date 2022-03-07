@@ -16,6 +16,17 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "annanrg"
+  name     = var.resource_group_name
   location = "westus2"
+  tags = {
+     Environment = "Terraform Getting Started"
+     Team = "DevOps"
+   }
+}
+
+resource "azurerm_virtual_network" "vnet" {
+    name                = "annanTFVnet"
+    address_space       = ["10.0.0.0/16"]
+    location            = "westus2"
+    resource_group_name = azurerm_resource_group.rg.name
 }
